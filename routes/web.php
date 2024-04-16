@@ -16,9 +16,10 @@ use App\Http\Controllers\ArticleController;
 |
 */
 
-Route::get('conduits/conduit', [ConduitController::class, 'index']);
+//Route::get('conduits/conduit', [ConduitController::class, 'index']);
 
 Route::get('/welcome', [ArticleController::class, 'welcome'])->name('articles');
+
 
 //Route::resource('articles', ArticleController::class);
 
@@ -27,7 +28,7 @@ Route::prefix('articles')
 ->controller(ArticleController::class)
 ->name('articles.')
 ->group(function(){
-    Route::get('/', 'index')->name('index');
+    Route::get('/index', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');
     Route::get('/{id}', 'show')->name('show');
@@ -36,13 +37,14 @@ Route::prefix('articles')
     Route::post('/{id}/destroy', 'destroy')->name('destroy');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [ArticleController::class, 'welcome'])->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');//ログインしていたらダッシュボードを表示？
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

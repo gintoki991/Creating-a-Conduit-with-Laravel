@@ -18,15 +18,10 @@ class ArticleController extends Controller
         return view('articles.index', compact('articles'));
     }
 
-    // public function welcome()
-    // {
-    //     $articles = Article::select('title', 'aboutArticle', 'tag')
-    //     ->get();
-    //     return view('welcome', compact('articles'));
-    // }
+
     public function welcome()
     {
-        $articles = Article::select('title', 'aboutArticle', 'tag')
+        $articles = Article::select('id', 'title', 'aboutArticle', 'tag')
         ->get();
         // dd($articles);  // これにより、$articles が何を含んでいるかブラウザに表示されます。
         return view('welcome', compact('articles'));
