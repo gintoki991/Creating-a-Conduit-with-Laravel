@@ -445,17 +445,15 @@
                                 <i class="ion-heart"></i> 29
                             </button>
                         </div>
-                        <a href="/article/how-to-build-webapps-that-scale" class="preview-link">
+                        <a href="{{ route('articles.show', ['id' => $article->id ]) }}" class="preview-link">
 
+                            <h1>{{ $article->title }}</h1>
+                            <p>{{ $article->aboutArticle }}</p>
 
-                            <h1>
-
-                                How to build webapps that scale</h1>
-
-                            <p>This is the description for the post.</p>
                             <span>Read more...</span>
                             <ul class="tag-list">
-                                <li class="tag-default tag-pill tag-outline">realworld</li>
+                                <li class="tag-default tag-pill tag-outline">{{ $article->tag }}
+                                    realworld</li>
                                 <li class="tag-default tag-pill tag-outline">implementations</li>
                             </ul>
                         </a>

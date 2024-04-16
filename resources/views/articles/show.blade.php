@@ -127,7 +127,7 @@
 
           <form id="delete_{{ $article->id }}" method="post" action="{{ route('articles.destroy', ['id' => $article->id ])}}">
             @csrf
-            <a href="#" data-id="{{ $contact->id }}" onclick="deletePost(this)" class="btn btn-sm btn-outline-danger">
+            <a href="#" data-id="{{ $article->id }}" onclick="deletePost(this)" class="btn btn-sm btn-outline-danger">
               <i class="ion-trash-a"></i> Delete Article
             </a>
         </div>
