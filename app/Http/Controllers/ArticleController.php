@@ -15,18 +15,8 @@ class ArticleController extends Controller
         $articles = Article::select('title', 'aboutArticle', 'article', 'tag', 'comment')
         ->get();
 
-        return view('articles.index', compact('articles'));
-    }
-
-
-    public function welcome()
-    {
-        $articles = Article::select('id', 'title', 'aboutArticle', 'tag')
-        ->get();
-        // dd($articles);  // これにより、$articles が何を含んでいるかブラウザに表示されます。
         return view('welcome', compact('articles'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -52,7 +42,7 @@ class ArticleController extends Controller
             'article' => $request->article,
         ]);
 
-    return to_route('articles.index');
+    return to_route('welcomeindex');
 
     }
 
@@ -90,7 +80,8 @@ class ArticleController extends Controller
         //$article->comment = $request->comment;
         $article->save();
 
-        return to_route('articles.index');
+        //return to_route('welcome');
+        return to_route('articles.show', ['id' => $article->id]);
     }
 
     /**
@@ -101,6 +92,6 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $article->delete();
 
-        return to_route('articles.index');
+        return to_route('welcomeindex');
     }
 }

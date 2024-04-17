@@ -65,13 +65,19 @@
             &nbsp; Favorite Post <span class="counter">(29)</span>
           </button>
 
-          <button class="btn btn-sm btn-outline-secondary">
-            <i class="ion-edit"></i> Edit Article
-          </button>
+          <!-- <form method="get" action="{{ route('articles.edit', ['id' => $article->id]) }}"> -->
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="ion-edit"></i> Edit Article
+            </button>
+          <!-- </form> -->
 
-          <button class="btn btn-sm btn-outline-danger">
-            <i class="ion-trash-a"></i> Delete Article
-          </button>
+          <form id="delete_{{ $article->id }}" method="post" action="{{ route('articles.destroy', ['id' => $article->id ])}}">
+            @csrf
+            <a href="#" data-id="{{ $article->id }}" onclick="deletePost(this)" class="btn btn-sm btn-outline-danger">
+              <i class="ion-trash-a"></i> Delete Article
+            </a>
+          </form>
+
         </div>
       </div>
     </div>
@@ -130,6 +136,7 @@
             <a href="#" data-id="{{ $article->id }}" onclick="deletePost(this)" class="btn btn-sm btn-outline-danger">
               <i class="ion-trash-a"></i> Delete Article
             </a>
+          </form>
         </div>
       </div>
 
