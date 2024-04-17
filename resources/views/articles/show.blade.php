@@ -65,11 +65,11 @@
             &nbsp; Favorite Post <span class="counter">(29)</span>
           </button>
 
-          <!-- <form method="get" action="{{ route('articles.edit', ['id' => $article->id]) }}"> -->
+          <form method="get" action="{{ route('articles.edit', ['id' => $article->id]) }}">
             <button class="btn btn-sm btn-outline-secondary">
               <i class="ion-edit"></i> Edit Article
             </button>
-          <!-- </form> -->
+          </form>
 
           <form id="delete_{{ $article->id }}" method="post" action="{{ route('articles.destroy', ['id' => $article->id ])}}">
             @csrf
@@ -125,11 +125,11 @@
             &nbsp; Favorite Article <span class="counter">(29)</span>
           </button>
 
-          <!-- <form method="get" action="{{ route('articles.edit', ['id' => $article->id ])}}"> -->
-          <button class="btn btn-sm btn-outline-secondary">
-            <i class="ion-edit"></i> Edit Article
-          </button>
-          <!-- </form> -->
+          <form method="get" action="{{ route('articles.edit', ['id' => $article->id ])}}">
+            <button class="btn btn-sm btn-outline-secondary">
+              <i class="ion-edit"></i> Edit Article
+            </button>
+          </form>
 
           <form id="delete_{{ $article->id }}" method="post" action="{{ route('articles.destroy', ['id' => $article->id ])}}">
             @csrf
@@ -143,9 +143,11 @@
       <!-- コメント -->
       <div class="row">
         <div class="col-xs-12 col-md-8 offset-md-2">
-          <form method="post" action="{{ route('articles.store') }}">
+          <form method="post" action="{{ route('comment.update', ['id' => $article->id ]) }}">
+            @csrf
             <div class="card-block">
-              <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+              <textarea type="text" id="comment" name="comment"  class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+
             </div>
             <div class="card-footer">
               <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />

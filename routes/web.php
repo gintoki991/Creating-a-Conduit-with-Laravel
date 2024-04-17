@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConduitController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ Route::prefix('articles')
     Route::get('/{id}', 'show')->name('show');
     Route::get('/{id}/edit', 'edit')->name('edit');
     // Route::get('/{id}/', 'edit')->name('edit');
-    Route::post('/{id}', 'update')->name('update');
+    Route::post('/{id}/edit', 'update')->name('update');
     Route::post('/{id}/destroy', 'destroy')->name('destroy');
 });
 
@@ -49,6 +50,17 @@ Route::controller(WelcomeController::class)
     Route::get('/', 'index')->name('index');
     //Route::get('/{id}', 'show')->name('show');
 });
+
+Route::prefix('articles')
+->middleware(['auth'])
+->controller(CommentController::class)
+->name('comment.')
+->group(
+    function (){
+        // Route::post('/(id}', 'store')->name('store');
+        Route::post('/{id}', 'update')->name('update');
+
+    });
 
 Route::get('/dashboard', function () {
     return view('dashboard');

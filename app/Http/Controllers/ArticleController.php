@@ -80,7 +80,6 @@ class ArticleController extends Controller
         //$article->comment = $request->comment;
         $article->save();
 
-        //return to_route('welcome');
         return to_route('articles.show', ['id' => $article->id]);
     }
 
