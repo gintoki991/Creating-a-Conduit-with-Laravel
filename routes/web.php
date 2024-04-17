@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConduitController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::prefix('articles')
     Route::post('/', 'store')->name('store');
     Route::get('/{id}', 'show')->name('show');
     Route::get('/{id}/edit', 'edit')->name('edit');
+    // Route::get('/{id}/', 'edit')->name('edit');
     Route::post('/{id}', 'update')->name('update');
     Route::post('/{id}/destroy', 'destroy')->name('destroy');
 });
@@ -40,7 +42,13 @@ Route::prefix('articles')
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [ArticleController::class, 'welcome'])->name('welcome');
+
+Route::controller(WelcomeController::class)
+->name('welcome')
+->group(function(){
+    Route::get('/', 'index')->name('index');
+    //Route::get('/{id}', 'show')->name('show');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
