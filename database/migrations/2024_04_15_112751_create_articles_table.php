@@ -16,9 +16,15 @@ return new class extends Migration
             $table->string('title', 50); //"How to train your dragon",
             $table->string('aboutArticle', 255); //"Ever wonder how?",
             $table->string('article', 255); //"You have to believe",
-            $table->string('tag', 255); //["reactjs", "angularjs", "dragons"]
-            $table->string('comment', 255)->default('No comment'); // デフォルト値を設定
-            ; // "His name was my name too."
+
+            // user_idカラムは外部キーとしてusersテーブルのidカラムを参照します。
+            // onDelete('cascade')はユーザーが削除された時、関連する記事も自動で削除されるようにします。
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+//tagテーブルが作成されて後，実行
+            // $table->unsignedBigInteger('tag_id');
+            // $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

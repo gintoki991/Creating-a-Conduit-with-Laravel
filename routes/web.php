@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ConduitController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,49 +18,54 @@ use App\Http\Controllers\CommentController;
 |
 */
 
-//Route::get('conduits/conduit', [ConduitController::class, 'index']);
 
-Route::get('/welcome', [ArticleController::class, 'welcome'])->name('articles');
-
-
-//Route::resource('articles', ArticleController::class);
+// Route::get('/welcome', [ArticleController::class, 'welcome'])->name('articles');
 
 Route::prefix('articles')
 ->middleware(['auth'])
 ->controller(ArticleController::class)
 ->name('articles.')
 ->group(function(){
-    Route::get('/index', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');
-    Route::get('/{id}', 'show')->name('show');
     Route::get('/{id}/edit', 'edit')->name('edit');
-    // Route::get('/{id}/', 'edit')->name('edit');
     Route::post('/{id}/edit', 'update')->name('update');
     Route::post('/{id}/destroy', 'destroy')->name('destroy');
 });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-Route::controller(WelcomeController::class)
-->name('welcome')
+//home
+Route::controller(ArticleController::class)
 ->group(function(){
-    Route::get('/', 'index')->name('index');
-    //Route::get('/{id}', 'show')->name('show');
+    Route::get('/', 'index')->name('home.index');
+    Route::post('/', 'index')->name('home.post');
+    Route::get('/articles/{id}', 'show')->name('articles.show');
 });
 
+//コメント
 Route::prefix('articles')
 ->middleware(['auth'])
 ->controller(CommentController::class)
 ->name('comment.')
 ->group(
     function (){
-        // Route::post('/(id}', 'store')->name('store');
+        Route::post('/(id}', 'store')->name('store');
         Route::post('/{id}', 'update')->name('update');
 
     });
+
+//タグ
+Route::prefix('articles')
+    ->middleware(['auth'])
+    ->controller(TagController::class)
+    ->name('tag.')
+    ->group(
+        function () {
+            Route::post('/create', 'store')->name('store');
+            // Route::post('/{id}', 'update')->name('update');
+            //Route::get('/create', 'create')->name('create');
+        }
+    );
 
 Route::get('/dashboard', function () {
     return view('dashboard');

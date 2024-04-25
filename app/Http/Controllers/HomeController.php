@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Tag;
 
-class WelcomeController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $articles = Article::select('id', 'title', 'aboutArticle', 'tag')
+        $articles = Article::select('id', 'title', 'aboutArticle', 'user_id')
+        ->get();
+        $comments = Comment::select('comment', 'article_id')
+        ->get();
+        $tags = tag::select('tag', 'article_id')
         ->get();
         // dd($articles);  // これにより、$articles が何を含んでいるかブラウザに表示されます。
-        return view('welcome', compact('articles'));
+        return view('welcome', compact('articles', 'comments', 'tags'));
     }
 
     /**

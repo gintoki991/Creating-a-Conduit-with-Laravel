@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -12,7 +14,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::select('comment')
+        ->get();
+        return view('home', compact('comments'));
     }
 
     /**
@@ -28,11 +32,22 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        Article::create([
-            'comment' => $request->comment,
-        ]);
+        // dd($request->all());  // 送信されたデータをダンプして停止
 
-        return to_route('welcomeindex');
+        $request->validate([
+            'comment' => 'required|string|max:255',
+            'id' => 'required|integer',
+        ]);
+        // コメントを新規作成し、記事IDをセットして保存
+        $comment = new Comment([
+            'comment' => $request->comment,
+            'article_id' => $request->id,  // 記事のIDを外部キーとしてセット?
+            'user_id' => $request->user()->id,
+        ]);
+        $comment->save();
+
+        //$article = Article::find($id);
+        return to_route('articles.show', ['id' => $request->id]);
 
     }
 
