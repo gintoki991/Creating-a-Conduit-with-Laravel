@@ -23,6 +23,17 @@ class User extends Authenticatable
         'password',
     ];
 
+    //articlesとのリレーション設定
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+    //commentsとのリレーション設定
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -143,7 +143,7 @@
       <!-- コメント -->
       <div class="row">
         <div class="col-xs-12 col-md-8 offset-md-2">
-          <form method="post" action="{{ route('comment.update', ['id' => $article->id ]) }}">
+          <form method="post" action="{{ route('comment.store', ['id' => $article->id ]) }}">
             @csrf
             <div class="card-block">
               <textarea type="text" id="comment" name="comment"  class="form-control" placeholder="Write a comment..." rows="3"></textarea>
